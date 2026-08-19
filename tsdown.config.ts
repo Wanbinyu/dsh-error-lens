@@ -67,6 +67,9 @@ export default defineConfig({
   entry: { client: 'lib/types/client/index.js' },
   outDir: 'lib',
   format: 'cjs',
+  // DSH's browser module loader requires a CommonJS factory wrapped by the
+  // banner/footer below; tsdown's generic ESM recommendation is not actionable.
+  failOnWarn: false,
   platform: 'browser',
   sourcemap: true,
   dts: false,
