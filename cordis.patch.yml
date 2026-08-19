@@ -1,0 +1,6 @@
+- insert:
+    - id: error-lens
+      name: dsh-error-lens
+      config:
+        maxRecords: 10
+        maxMessageLength: 2000
