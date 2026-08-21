@@ -9,5 +9,13 @@ interface ErrorLensState {
     totalFailures: number;
     recent: ErrorLensRecord[];
 }
-export declare function errorLensProjectionDefinition(config: ErrorLensConfig): ProjectionDefinition<'error-lens', ErrorLensState>;
+declare module '@deepseek-ai/dsh-session-projection/types' {
+    interface SessionProjectionStateMap {
+        'error-lens': ErrorLensState;
+    }
+}
+type ErrorLensProjectionDefinition = Omit<ProjectionDefinition<'error-lens', ErrorLensState>, 'wire'> & {
+    wire: NonNullable<ProjectionDefinition<'error-lens', ErrorLensState>['wire']>;
+};
+export declare function errorLensProjectionDefinition(config: ErrorLensConfig): ErrorLensProjectionDefinition;
 export {};

@@ -14,6 +14,17 @@ interface ErrorLensState {
   recent: ErrorLensRecord[]
 }
 
+declare module '@deepseek-ai/dsh-session-projection/types' {
+  interface SessionProjectionStateMap {
+    'error-lens': ErrorLensState
+  }
+}
+
+type ErrorLensProjectionDefinition =
+  Omit<ProjectionDefinition<'error-lens', ErrorLensState>, 'wire'> & {
+    wire: NonNullable<ProjectionDefinition<'error-lens', ErrorLensState>['wire']>
+  }
+
 function recordFrom(
   event: SessionEvent & { type: 'turn/end' },
   route: ErrorLensState['route'],
@@ -35,7 +46,7 @@ function recordFrom(
 
 export function errorLensProjectionDefinition(
   config: ErrorLensConfig,
-): ProjectionDefinition<'error-lens', ErrorLensState> {
+): ErrorLensProjectionDefinition {
   const recordSchema = z.object({
     turn: z.number().int().positive(),
     time: z.number().nonnegative(),
@@ -58,7 +69,16 @@ export function errorLensProjectionDefinition(
     status: z.number().int().optional(),
     requestId: z.string().optional(),
   }).strict()
-  const schema = z.object({
+  const stateSchema = z.object({
+    route: z.object({
+      provider: z.string(),
+      model: z.string(),
+    }).strict(),
+    active: z.boolean(),
+    totalFailures: z.number().int().nonnegative(),
+    recent: z.array(recordSchema),
+  }).strict() as z.ZodType<ErrorLensState>
+  const viewSchema = z.object({
     active: z.boolean(),
     totalFailures: z.number().int().nonnegative(),
     recent: z.array(recordSchema),
@@ -67,7 +87,7 @@ export function errorLensProjectionDefinition(
 
   return {
     key: 'error-lens',
-    schema,
+    stateSchema,
     init: () => ({
       route: { provider: UNKNOWN_ROUTE, model: UNKNOWN_ROUTE },
       active: false,
@@ -95,12 +115,15 @@ export function errorLensProjectionDefinition(
         recent: [...state.recent, record].slice(-config.maxRecords),
       }
     },
-    view: state => ({
-      active: state.active,
-      totalFailures: state.totalFailures,
-      recent: state.recent,
-      ...state.recent.length === 0 ? {} : { latest: state.recent[state.recent.length - 1] },
-    }),
+    wire: {
+      viewSchema,
+      view: state => ({
+        active: state.active,
+        totalFailures: state.totalFailures,
+        recent: state.recent,
+        ...state.recent.length === 0 ? {} : { latest: state.recent[state.recent.length - 1] },
+      }),
+    },
     stateVersion: 1,
   }
 }
