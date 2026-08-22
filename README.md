@@ -23,6 +23,7 @@ Error Lens 会保留状态码、错误码、请求 ID、供应商和模型，同
 ## 功能
 
 - 在消息输入区上方显示最近一次仍未恢复的请求失败；
+- 展开后显示最近 3 条此前失败，便于比较是否为重复故障；
 - 区分身份验证、禁止访问、限流、上下文超限、兼容性、超时、网络和服务端错误；
 - 展示 DSH 已持久化的供应商错误消息与 Request ID；
 - 一键复制中英文脱敏诊断报告；
@@ -33,10 +34,10 @@ Error Lens 会保留状态码、错误码、请求 ID、供应商和模型，同
 ## 安装
 
 要求 Node.js `>=22.19` 和 DeepSeek Harness `0.1.0-rc.6` 或更高版本。
-`v0.1.1` 已使用 DeepSeek Harness `0.1.1-rc.1` 完成类型、测试、构建和打包验证，并保留 `0.1.0-rc.6` 至 `rc.8` 的兼容分支。
+`v0.1.2` 已使用 DeepSeek Harness `0.1.1-rc.2` 完成类型、测试、构建和打包验证，并保留 `0.1.0-rc.6` 至 `rc.8`、`0.1.1-rc.1` 的兼容分支。
 
 ```bash
-dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/archive/refs/tags/v0.1.1.tar.gz
+dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/releases/download/v0.1.2/dsh-error-lens-0.1.2.tgz
 ```
 
 安装或更新后重启：

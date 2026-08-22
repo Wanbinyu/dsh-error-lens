@@ -78,6 +78,20 @@ describe('error-lens projection', () => {
     expect(value.latest?.turn).toBe(3)
   })
 
+  it('redacts and bounds provider identifiers used by the UI and report', async () => {
+    const { ctx, session } = await harness()
+    fail(session, 1, {
+      code: `BAD\n\u0085${'X'.repeat(200)}`,
+      message: 'failed',
+      requestId: 'sk-12345678901234567890' as never,
+    })
+
+    const record = projected(ctx, session).latest
+    expect(record?.code.length).toBeLessThanOrEqual(128)
+    expect(record?.code).not.toMatch(/[\u0000-\u001f\u007f-\u009f]/)
+    expect(record?.requestId).toBe('<redacted-api-key>')
+  })
+
   it('hides the active banner after a later successful turn without deleting history', async () => {
     const { ctx, session } = await harness()
     fail(session, 1, { code: 'TRANSPORT', message: 'network error' })

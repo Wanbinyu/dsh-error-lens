@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ErrorLensCategory, ErrorLensProjection } from '../client.ts'
 import {
   IconChevronDownOutline14,
@@ -29,7 +29,9 @@ export function ErrorLens({ diagnostics, t }: ErrorLensProps & PropsLocale<'erro
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const record = diagnostics?.latest
+  useEffect(() => { setCopied(false) }, [diagnostics?.totalFailures])
   if (diagnostics === undefined || diagnostics === null || !diagnostics.active || record === undefined) return null
+  const previousRecords = diagnostics.recent.slice(0, -1).slice(-3).reverse()
 
   const copyReport = async () => {
     const success = await writeClipboard(buildDiagnosticReport(diagnostics, t))
@@ -71,6 +73,20 @@ export function ErrorLens({ diagnostics, t }: ErrorLensProps & PropsLocale<'erro
               {record.requestId !== undefined && <div><dt>{t('requestId')}</dt><dd>{record.requestId}</dd></div>}
               <div><dt>{t('failureCount')}</dt><dd>{diagnostics.totalFailures}</dd></div>
             </dl>
+            {previousRecords.length > 0 && (
+              <section className={css.history} aria-label={t('recentHistory')}>
+                <h3>{t('recentHistory')}</h3>
+                <ul>
+                  {previousRecords.map(previous => (
+                    <li key={`${String(previous.time)}-${String(previous.turn)}`}>
+                      <span>{t('turn')} {previous.turn}</span>
+                      <span title={`${previous.provider}/${previous.model}`}>{previous.provider}/{previous.model}</span>
+                      <code>{previous.status ?? previous.code}</code>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
             <p className={css.hint}>{t(hintKey(record.category))}</p>
             <p className={css.privacy}>{t('privacy')}</p>
           </div>

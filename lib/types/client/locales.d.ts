@@ -8,6 +8,7 @@ export declare const zh: {
     requestId: string;
     turn: string;
     failureCount: string;
+    recentHistory: string;
     copy: string;
     copied: string;
     expand: string;
@@ -45,6 +46,7 @@ export declare const en: {
     requestId: string;
     turn: string;
     failureCount: string;
+    recentHistory: string;
     copy: string;
     copied: string;
     expand: string;

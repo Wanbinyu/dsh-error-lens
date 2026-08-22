@@ -6,6 +6,7 @@ import { classifyFailure, redactMessage } from './redact.ts'
 import type { ErrorLensConfig, ErrorLensProjection, ErrorLensRecord } from './types.ts'
 
 const UNKNOWN_ROUTE = '(unknown)'
+const MAX_IDENTIFIER_LENGTH = 128
 
 interface ErrorLensState {
   route: { provider: string; model: string }
@@ -25,6 +26,14 @@ type ErrorLensProjectionDefinition =
     wire: NonNullable<ProjectionDefinition<'error-lens', ErrorLensState>['wire']>
   }
 
+function safeIdentifier(value: string, fallback: string): string {
+  const normalized = redactMessage(value, MAX_IDENTIFIER_LENGTH)
+    .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return normalized.length === 0 ? fallback : normalized
+}
+
 function recordFrom(
   event: SessionEvent & { type: 'turn/end' },
   route: ErrorLensState['route'],
@@ -37,10 +46,12 @@ function recordFrom(
     provider: route.provider,
     model: route.model,
     category: classifyFailure(failure),
-    code: failure.code,
+    code: safeIdentifier(failure.code, 'UNKNOWN'),
     message: redactMessage(failure.message, maxMessageLength),
     ...failure.status === undefined ? {} : { status: failure.status },
-    ...failure.requestId === undefined ? {} : { requestId: String(failure.requestId) },
+    ...failure.requestId === undefined
+      ? {}
+      : { requestId: safeIdentifier(String(failure.requestId), '<redacted>') },
   }
 }
 
@@ -64,10 +75,10 @@ export function errorLensProjectionDefinition(
       'server',
       'unknown',
     ]),
-    code: z.string(),
+    code: z.string().max(MAX_IDENTIFIER_LENGTH),
     message: z.string(),
     status: z.number().int().optional(),
-    requestId: z.string().optional(),
+    requestId: z.string().max(MAX_IDENTIFIER_LENGTH).optional(),
   }).strict()
   const stateSchema = z.object({
     route: z.object({
