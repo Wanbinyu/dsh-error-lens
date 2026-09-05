@@ -27,6 +27,7 @@ Error Lens keeps the status, stable code, request ID, provider, and model while 
 - Classifies authentication, forbidden, rate-limit, context, compatibility, timeout, transport, and server failures;
 - Displays the provider message and Request ID already persisted by DSH;
 - Copies a redacted diagnostic report;
+- Lets users manually hide the current diagnostics panel without deleting session error records or counts;
 - Hides the warning after a later turn succeeds while retaining bounded session statistics;
 - Does not read credential storage, save full prompts, retry requests, or mutate model traffic;
 - Uses the official session projection and Web UI slot APIs without DOM injection.
@@ -34,10 +35,10 @@ Error Lens keeps the status, stable code, request ID, provider, and model while 
 ## Install
 
 Requires Node.js `>=22.19` and DeepSeek Harness `0.1.0-rc.6` or newer.
-`v0.1.2` is type-checked, tested, built, and package-validated against DeepSeek Harness `0.1.1-rc.2` while retaining compatibility with `0.1.0-rc.6` through `rc.8` and `0.1.1-rc.1`.
+`v0.1.3` is type-checked, tested, built, and package-validated against DeepSeek Harness `0.1.1-rc.2` while retaining compatibility with `0.1.0-rc.6` through `rc.8` and `0.1.1-rc.1`.
 
 ```bash
-dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/releases/download/v0.1.2/dsh-error-lens-0.1.2.tgz
+dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/releases/download/v0.1.3/dsh-error-lens-0.1.3.tgz
 ```
 
 Restart after installation or update:

@@ -3,6 +3,7 @@ import type { ErrorLensCategory, ErrorLensProjection } from '../client.ts'
 import {
   IconChevronDownOutline14,
   IconChevronUpOutline14,
+  IconCloseOutline16,
   IconCopyOutline16,
   IconWarningOutline16,
   Tooltip,
@@ -28,14 +29,27 @@ function hintKey(category: ErrorLensCategory): ErrorLensKey {
 export function ErrorLens({ diagnostics, t }: ErrorLensProps & PropsLocale<'error-lens'>) {
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [dismissedRecordKey, setDismissedRecordKey] = useState<string | null>(null)
   const record = diagnostics?.latest
+  const recordKey = record === undefined ? null : `${diagnostics?.totalFailures ?? 0}:${record.turn}:${record.time}`
   useEffect(() => { setCopied(false) }, [diagnostics?.totalFailures])
-  if (diagnostics === undefined || diagnostics === null || !diagnostics.active || record === undefined) return null
+  if (
+    diagnostics === undefined ||
+    diagnostics === null ||
+    !diagnostics.active ||
+    record === undefined ||
+    recordKey === dismissedRecordKey
+  ) return null
   const previousRecords = diagnostics.recent.slice(0, -1).slice(-3).reverse()
 
   const copyReport = async () => {
     const success = await writeClipboard(buildDiagnosticReport(diagnostics, t))
     setCopied(success)
+  }
+
+  const dismissPanel = () => {
+    setDismissedRecordKey(recordKey)
+    setOpen(false)
   }
 
   return (
@@ -58,6 +72,11 @@ export function ErrorLens({ diagnostics, t }: ErrorLensProps & PropsLocale<'erro
             <Tooltip label={open ? t('collapse') : t('expand')} side="top">
               <button type="button" className={css.iconButton} aria-expanded={open} aria-label={open ? t('collapse') : t('expand')} onClick={() => setOpen(value => !value)}>
                 {open ? <IconChevronUpOutline14 size={14} /> : <IconChevronDownOutline14 size={14} />}
+              </button>
+            </Tooltip>
+            <Tooltip label={t('dismiss')} side="top">
+              <button type="button" className={css.iconButton} aria-label={t('dismiss')} onClick={dismissPanel}>
+                <IconCloseOutline16 size={16} />
               </button>
             </Tooltip>
           </span>

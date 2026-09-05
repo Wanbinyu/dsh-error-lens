@@ -13,6 +13,7 @@ export declare const zh: {
     copied: string;
     expand: string;
     collapse: string;
+    dismiss: string;
     privacy: string;
     'category.authentication': string;
     'category.forbidden': string;
@@ -51,6 +52,7 @@ export declare const en: {
     copied: string;
     expand: string;
     collapse: string;
+    dismiss: string;
     privacy: string;
     'category.authentication': string;
     'category.forbidden': string;

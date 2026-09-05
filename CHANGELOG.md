@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 - 2026-09-05
+
+- Add a manual close button for the active diagnostics panel without deleting session failure records or counts.
+
 ## 0.1.1 - 2026-08-21
 
 - Validate types, tests, builds, and package contents against DeepSeek Harness `0.1.1-rc.1`.

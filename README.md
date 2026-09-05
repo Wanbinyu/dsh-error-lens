@@ -27,6 +27,7 @@ Error Lens 会保留状态码、错误码、请求 ID、供应商和模型，同
 - 区分身份验证、禁止访问、限流、上下文超限、兼容性、超时、网络和服务端错误；
 - 展示 DSH 已持久化的供应商错误消息与 Request ID；
 - 一键复制中英文脱敏诊断报告；
+- 可手动关闭当前诊断面板，且不删除会话内错误记录和统计；
 - 成功完成下一轮后自动隐藏提示，但保留有限的会话内错误统计；
 - 不读取凭据存储，不保存完整提示词，不自动重试，不修改模型请求；
 - 基于官方 session projection 与 Web UI slot，无 DOM 注入。
@@ -34,10 +35,10 @@ Error Lens 会保留状态码、错误码、请求 ID、供应商和模型，同
 ## 安装
 
 要求 Node.js `>=22.19` 和 DeepSeek Harness `0.1.0-rc.6` 或更高版本。
-`v0.1.2` 已使用 DeepSeek Harness `0.1.1-rc.2` 完成类型、测试、构建和打包验证，并保留 `0.1.0-rc.6` 至 `rc.8`、`0.1.1-rc.1` 的兼容分支。
+`v0.1.3` 已使用 DeepSeek Harness `0.1.1-rc.2` 完成类型、测试、构建和打包验证，并保留 `0.1.0-rc.6` 至 `rc.8`、`0.1.1-rc.1` 的兼容分支。
 
 ```bash
-dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/releases/download/v0.1.2/dsh-error-lens-0.1.2.tgz
+dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/releases/download/v0.1.3/dsh-error-lens-0.1.3.tgz
 ```
 
 安装或更新后重启：
