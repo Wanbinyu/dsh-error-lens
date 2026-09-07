@@ -35,10 +35,10 @@ Error Lens keeps the status, stable code, request ID, provider, and model while 
 ## Install
 
 Requires Node.js `>=22.19` and DeepSeek Harness `0.1.0-rc.6` or newer.
-`v0.1.5` is type-checked, tested, built, and package-validated against DeepSeek Harness `0.1.2-rc.1` while retaining compatibility with `0.1.0-rc.6` through `rc.8` and `0.1.1-rc.1` through `rc.2`.
+`v0.1.6` is type-checked, tested, built, and package-validated against DeepSeek Harness `0.1.2-rc.1` while retaining compatibility with `0.1.0-rc.6` through `rc.8` and `0.1.1-rc.1` through `rc.2`.
 
 ```bash
-dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/releases/download/v0.1.5/dsh-error-lens-0.1.5.tgz
+dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/releases/download/v0.1.6/dsh-error-lens-0.1.6.tgz
 ```
 
 Restart after installation or update:
