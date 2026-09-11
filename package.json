@@ -1,6 +1,6 @@
 {
   "name": "dsh-error-lens",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Read-only, redacted provider error diagnostics for DeepSeek Harness",
   "repository": {
     "type": "git",

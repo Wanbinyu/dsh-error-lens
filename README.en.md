@@ -1,6 +1,6 @@
 # dsh-error-lens
 
-> **Unreleased source compatibility fix (2026-09-11)**: current source targets Harness `0.1.5-rc.2` and passes the `0.1.1-rc.2` baseline. Web clients no longer request the removed `@deepseek-ai/dsh-client-runtime/client` module. Companion bundles the standalone Store engine and supports the new pending-interaction hook; billing retains legacy streamed usage and modern final usage. No npm package, Release, or installer was published. Release links below still download older builds. For a `0.1.5` host, build this source with `npm ci && npm run verify`, then install a local `npm pack` archive. Source compatibility does not change existing release archives.
+> **v0.1.7 compatibility update**: verified against Harness `0.1.5-rc.2` and the `0.1.1-rc.2` baseline. Web plugins no longer request the retired runtime module. Download links below target the fixed archive; other host versions require verification.
 
 
 English | [简体中文](README.md)
@@ -38,10 +38,10 @@ Error Lens keeps the status, stable code, request ID, provider, and model while 
 ## Install
 
 Requires Node.js `>=22.19` and DeepSeek Harness `0.1.0-rc.6` or newer.
-`v0.1.6` is type-checked, tested, built, and package-validated against DeepSeek Harness `0.1.2-rc.1` while retaining compatibility with `0.1.0-rc.6` through `rc.8` and `0.1.1-rc.1` through `rc.2`.
+`v0.1.7` is type-checked, tested, built, and package-validated against DeepSeek Harness `0.1.2-rc.1` while retaining compatibility with `0.1.0-rc.6` through `rc.8` and `0.1.1-rc.1` through `rc.2`.
 
 ```bash
-dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/releases/download/v0.1.6/dsh-error-lens-0.1.6.tgz
+dsh plugin --profile web add https://github.com/Wanbinyu/dsh-error-lens/releases/download/v0.1.7/dsh-error-lens-0.1.7.tgz
 ```
 
 Restart after installation or update:
