@@ -1,5 +1,8 @@
 # dsh-error-lens
 
+> **Unreleased source compatibility fix (2026-09-11)**: current source targets Harness `0.1.5-rc.2` and passes the `0.1.1-rc.2` baseline. Web clients no longer request the removed `@deepseek-ai/dsh-client-runtime/client` module. Companion bundles the standalone Store engine and supports the new pending-interaction hook; billing retains legacy streamed usage and modern final usage. No npm package, Release, or installer was published. Release links below still download older builds. For a `0.1.5` host, build this source with `npm ci && npm run verify`, then install a local `npm pack` archive. Source compatibility does not change existing release archives.
+
+
 English | [简体中文](README.md)
 
 > Unofficial community plugin. It is not affiliated with or endorsed by DeepSeek.

@@ -1,5 +1,8 @@
 # dsh-error-lens
 
+> **源码兼容性修复（2026-09-11，尚未发布）**：当前源码已适配 Harness `0.1.5-rc.2`，并通过 `0.1.1-rc.2` 基线回归。Web 插件不再请求已移除的 `@deepseek-ai/dsh-client-runtime/client`；Companion 改用独立 Store 引擎，并兼容新版等待交互状态；计费投影兼容新版最终用量事件。本次没有发布 npm 包、Release 或新安装包。下面的 Release 下载链接仍是旧构建，不能用于验证新版宿主修复；使用 `0.1.5` 时请从当前源码执行 `npm ci && npm run verify`，再本地 `npm pack` 后安装。不要把源码兼容性当成旧下载包的兼容性。
+
+
 [English](README.en.md) | 简体中文
 
 > 非官方社区插件，与 DeepSeek 官方无隶属或背书关系。

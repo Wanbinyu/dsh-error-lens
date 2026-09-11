@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        harness: [pinned, baseline]
         node-version: [22, 24]
     steps:
       - uses: actions/checkout@v4
@@ -17,4 +18,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - run: npm ci
+      - if: matrix.harness == 'baseline'
+        run: npm run install:baseline
       - run: npm run verify
