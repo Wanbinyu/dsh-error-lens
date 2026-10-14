@@ -9,10 +9,10 @@ export { classifyFailure, redactMessage } from './redact.ts'
 export const name = 'error-lens'
 export const inject = ['sessionProjections']
 
-export const Config: z<ErrorLensConfig> = z.object({
+export const Config = z.object({
   maxRecords: z.number().min(1).max(50).default(10),
   maxMessageLength: z.number().min(256).max(8000).default(2000),
-})
+}) as unknown as z<ErrorLensConfig>
 
 export function apply(
   ctx: Context,

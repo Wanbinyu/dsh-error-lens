@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react'
 import type { ErrorLensCategory, ErrorLensProjection } from '../client.ts'
 import {
-  IconChevronDownOutline14,
-  IconChevronUpOutline14,
-  IconCloseOutline16,
-  IconCopyOutline16,
-  IconWarningOutline16,
   Tooltip,
   writeClipboard,
 } from '@deepseek-ai/dsh-client-ui-primitives'
+import { hostIcon } from './hostIcon.ts'
 import type { PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
 import type { ErrorLensKey } from './locales.ts'
 import { buildDiagnosticReport } from './report.ts'
 import css from './ErrorLens.module.css'
+
+const IconChevronDownOutline = hostIcon('IconChevronDownOutlineMedium', 'IconChevronDownOutline14')
+const IconChevronUpOutline = hostIcon('IconChevronUpOutlineMedium', 'IconChevronUpOutline14')
+const IconCloseOutline = hostIcon('IconCloseOutlineMedium', 'IconCloseOutline16')
+const IconCopyOutline = hostIcon('IconCopyOutlineMedium', 'IconCopyOutline16')
+const IconWarningOutline = hostIcon('IconWarningOutlineMedium', 'IconWarningOutline16')
 
 export interface ErrorLensProps {
   diagnostics: ErrorLensProjection | null | undefined
@@ -56,7 +58,7 @@ export function ErrorLens({ diagnostics, t }: ErrorLensProps & PropsLocale<'erro
     <div className={css.dock} data-error-lens>
       <div className={css.panel} data-category={record.category}>
         <div className={css.summary} role="alert">
-          <span className={css.glyph}><IconWarningOutline16 size={16} /></span>
+          <span className={css.glyph}><IconWarningOutline size={16} /></span>
           <span className={css.label}>{t('label')}</span>
           <span className={css.category}>{t(categoryKey(record.category))}</span>
           <span className={css.route} title={`${record.provider}/${record.model}`}>
@@ -66,17 +68,17 @@ export function ErrorLens({ diagnostics, t }: ErrorLensProps & PropsLocale<'erro
           <span className={css.actions}>
             <Tooltip label={copied ? t('copied') : t('copy')} side="top">
               <button type="button" className={css.iconButton} aria-label={copied ? t('copied') : t('copy')} onClick={copyReport}>
-                <IconCopyOutline16 size={16} />
+                <IconCopyOutline size={16} />
               </button>
             </Tooltip>
             <Tooltip label={open ? t('collapse') : t('expand')} side="top">
               <button type="button" className={css.iconButton} aria-expanded={open} aria-label={open ? t('collapse') : t('expand')} onClick={() => setOpen(value => !value)}>
-                {open ? <IconChevronUpOutline14 size={14} /> : <IconChevronDownOutline14 size={14} />}
+                {open ? <IconChevronUpOutline size={14} /> : <IconChevronDownOutline size={14} />}
               </button>
             </Tooltip>
             <Tooltip label={t('dismiss')} side="top">
               <button type="button" className={css.iconButton} aria-label={t('dismiss')} onClick={dismissPanel}>
-                <IconCloseOutline16 size={16} />
+                <IconCloseOutline size={16} />
               </button>
             </Tooltip>
           </span>
